@@ -1,0 +1,28 @@
+{
+  "wallet": {
+    "identityFile": "wallets/identity_smartrewards.json",
+    "passphrase": "your-secure-passphrase-here"
+  },
+  "chain": {
+    "chainId": 146,
+    "rpcUrl": "https://rpc.soniclabs.com",
+    "smartRewardsAddress": "0x3966b5B8AD4BEf3Be7d391d36d7202B3CB0D0C3f",
+    "useLegacyTx": true
+  },
+  "campaign": {
+    "poolAddress": "0xb1bc4b830fcba2184b92e15b9133c41160518038",
+    "rewardTokenAddress": "0xddF26B42C1d903De8962d3F79a74a501420d5F19",
+    "escrowAmount": "5",
+    "durationInDays": 7,
+    "startDelayInHours": 1,
+    "metadata": {
+      "name": "Boost liquidity",
+      "description": "Increase liquidity in a specific vault to improve market depth and reduce slippage.",
+      "protocol": "ThickV2",
+      "category": "Liquidity Boost",
+      "campaignType": "token_balance_rewards",
+      "execution_bundle": "QmWsyDNFPNXDDreLMtHjf4bcywKDP5aXJ8aKDxWsj6ccHR"
+    }
+  }
+}
+

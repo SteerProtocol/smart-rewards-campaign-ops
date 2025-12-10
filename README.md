@@ -1,16 +1,18 @@
 # Smart Rewards Campaign Operations
 
-A comprehensive TypeScript library for managing Smart Rewards campaign operations, including campaign data fetching, rewards calculation, and on-chain claim execution.
+A comprehensive TypeScript library for managing Smart Rewards campaign operations, including campaign data fetching, rewards calculation, on-chain claim execution, and **automated campaign creation with wallet management**.
 
 ## Features
 
 - 🎯 **Campaign Management**: Fetch and manage campaigns with pagination support
 - 💰 **Rewards Calculation**: Calculate claimable rewards with precision
 - 🔗 **On-chain Claims**: Execute claims directly on blockchain
+- 🚀 **Campaign Creation**: Create reward campaigns on Sonic and other EVM chains
 - 🏷️ **Token Enrichment**: Fetch token metadata automatically
 - ⚡ **GraphQL Client**: Efficient campaign data querying
 - 🛡️ **Error Handling**: Comprehensive error handling and validation
 - 📊 **CLI Interface**: Command-line interface for operations
+- 🔐 **Wallet Management**: Secure encrypted wallet handling
 
 ## Installation
 
@@ -50,12 +52,54 @@ if (canClaim.canClaim) {
 ### CLI Usage
 
 ```bash
-# Run CLI commands
+# Run Smart Rewards CLI
 yarn cli
+
+# Create a campaign on Sonic
+yarn create-campaign --config campaign-config.json
+
+# Create campaign with environment variables
+WALLET_PASSPHRASE=mypass yarn create-campaign --config config.json
 
 # Development mode
 yarn dev
 ```
+
+### Campaign Creation
+
+Create reward campaigns on Sonic and other EVM-compatible chains:
+
+```typescript
+import { createSonicCampaign } from 'smart-rewards-campaign-ops';
+
+// Create a campaign on Sonic
+const result = await createSonicCampaign(
+  {
+    identityFile: 'wallets/identity.json',
+    passphrase: process.env.WALLET_PASSPHRASE!
+  },
+  {
+    poolAddress: '0xYourPoolAddress',
+    rewardTokenAddress: '0xYourTokenAddress',
+    escrowAmount: '5',
+    durationInDays: 7,
+    startDelayInHours: 1,
+    metadata: {
+      name: 'Boost liquidity',
+      description: 'Increase liquidity in vault',
+      protocol: 'ThickV2',
+      category: 'Liquidity Boost',
+      campaignType: 'token_balance_rewards',
+      execution_bundle: 'QmYourIPFSHash'
+    }
+  }
+);
+
+console.log('Campaign created:', result.transactionHash);
+console.log('Campaign ID:', result.campaignId);
+```
+
+For detailed campaign creation documentation, see [CAMPAIGN_CREATION.md](./CAMPAIGN_CREATION.md).
 
 ## Project Structure
 
@@ -73,11 +117,16 @@ src/
 │   ├── calculations.ts        # Reward calculation utilities
 │   └── pagination.ts          # Pagination utilities
 ├── blockchain/                 # Blockchain-related functionality
-│   └── onchain-claim.ts       # On-chain claim execution
+│   ├── onchain-claim.ts       # On-chain claim execution
+│   └── campaign-creation.ts   # Campaign creation on blockchain
+├── abi/                        # Smart contract ABIs
+│   ├── ERC20.json             # ERC20 token ABI
+│   └── SmartRewardsTimestamp.json # SmartRewards contract ABI
 ├── utils/                      # Utility functions
 │   └── error-handler.ts       # Error handling and validation
 └── cli/                        # Command-line interface
-    └── smart-rewards-cli.ts   # CLI implementation
+    ├── smart-rewards-cli.ts   # Smart Rewards CLI
+    └── create-campaign.ts     # Campaign creation CLI
 ```
 
 ## Development
@@ -126,12 +175,22 @@ Campaign data fetching:
 - `fetchCampaignsPage(chainId, cursor, pageSize)`: Paginated fetching
 - `processCampaignsInChunks(chainId, processor)`: Process in chunks
 
+### CampaignCreator
+
+Campaign creation on blockchain:
+
+- `loadWallet(walletConfig)`: Load encrypted wallet
+- `approveTokens(tokenAddress, amount)`: Approve token spending
+- `calculateCampaignTiming(startDelay, duration)`: Calculate timestamps
+- `createCampaign(campaignParams)`: Create campaign on-chain
+
 ### Utility Classes
 
 - `RewardCalculator`: Reward calculations and unit conversions
 - `TokenEnrichmentClient`: Token metadata fetching
 - `PaginationManager`: Pagination handling
 - `ErrorHandler`: Error handling and validation
+- `OnChainClaimClient`: On-chain claim execution
 
 ## License
 

@@ -264,6 +264,7 @@ export * from './clients/smart-rewards-client';
 export * from './core/smart-rewards';
 export * from './core/calculations';
 export * from './blockchain/onchain-claim';
+export * from './blockchain/campaign-creation';
 
 // Export a default client instance
 export const defaultCampaignClient = new CampaignClient();

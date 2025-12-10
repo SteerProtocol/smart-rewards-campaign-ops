@@ -242,6 +242,17 @@ private-keys.txt
 mnemonic.txt
 .private
 
+# Wallet files - NEVER COMMIT THESE
+wallets/
+*.json.encrypted
+identity*.json
+*wallet*.json
+
+# Campaign configuration with secrets
+campaign-config.json
+*-config.json
+!campaign-config.example.json
+
 # Temporary smart rewards data
 rewards-data/
 claims-data/

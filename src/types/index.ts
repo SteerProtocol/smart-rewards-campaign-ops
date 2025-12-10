@@ -320,3 +320,51 @@ export interface UserCampaignRewardTotalQueryVariables {
   campaignId: string;
   chainId: number;
 }
+
+// Campaign Creation Types
+
+export interface CampaignCreationConfig {
+  chainId: number;
+  rpcUrl: string;
+  smartRewardsAddress: string;
+  useLegacyTx?: boolean;
+}
+
+export interface WalletConfig {
+  identityFile: string;
+  passphrase: string;
+}
+
+export interface CampaignMetadata {
+  name: string;
+  description: string;
+  protocol: string;
+  category: string;
+  campaignType: string;
+  execution_bundle: string;
+  execution_parameters?: Record<string, any>;
+  epochLength?: number;
+  rewarderType?: string;
+}
+
+export interface CampaignCreationResult {
+  transactionHash: string;
+  blockNumber: number;
+  gasUsed: string;
+  campaignId?: string;
+  startTimestamp: number;
+  endTimestamp: number;
+  escrowAmount: string;
+  ipfsHash: string;
+}
+
+export class CampaignCreationError extends Error {
+  constructor(
+    message: string,
+    public errorCode: string,
+    public originalError?: any
+  ) {
+    super(message);
+    this.name = 'CampaignCreationError';
+  }
+}
